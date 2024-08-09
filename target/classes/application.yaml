@@ -1,0 +1,46 @@
+server:
+  port: 8090
+frontend:
+  login-page: http://localhost:5173/task-tracker/auth/login
+  user-page: http://localhost:5173/task-tracker/user
+services:
+  task: http://localhost:8080/taskServiceApi
+
+spring:
+  application:
+    name: authService
+  session:
+    redis:
+      host: localhost
+      port: 6379
+  datasource:
+    url: jdbc:postgresql://localhost:5434/clients
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            clientId: Ov23liMScbr0doTid1dm
+            clientSecret: 01363a1fff0876f32ad55870ea3de7e7024bab38
+          yandex:
+            provider: yandex
+            clientId: 49ee2dc7949444f2a81a34fb81282747
+            clientSecret: 604bf0be165f4293bbe38d9e09e8fd46
+            redirectUri: http://localhost:8090/login/oauth2/code/yandex
+            authorizationGrantType: authorization_code
+            clientName: Yandex
+        provider:
+          yandex:
+            authorizationUri: https://oauth.yandex.ru/authorize
+            tokenUri: https://oauth.yandex.ru/token
+            userNameAttribute: default_email
+            userInfoUri: https://login.yandex.ru/info
