@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/task-tracker/team")
 public class TeamController {
 
+        public void test() {
 
+        }
 
 }
