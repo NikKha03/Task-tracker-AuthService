@@ -23,7 +23,6 @@ public class TaskController {
     }
 
     private final UserService userService;
-
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Value("${services.task}")
@@ -46,51 +45,27 @@ public class TaskController {
     }
 
     @GetMapping("/onTheDay")
-    public ResponseEntity<?> getTasksOnTheDay(Principal principal) throws org.json.simple.parser.ParseException {
+    public ResponseEntity<?> getTasksOnTheDay(Principal principal) {
         Long currentUserId = userService.getPrincipalUserId(principal);
-        String response = restTemplate.getForObject(taskService + '/' + currentUserId + "/allInProgressTasksWithDatePlannedImplementation", String.class);
+        String response = restTemplate.getForObject(taskService + '/' + currentUserId + "/tasksOnTheDay", String.class);
 
-        LocalDate currentDate = LocalDate.now();
-        List<Object> listTasksOnTheDay = new ArrayList<>();
-        JSONArray json = (JSONArray) new JSONParser().parse(response);
-
-        for (Object item : json) {
-            JSONObject obj = (JSONObject) item;
-            String data = (String) obj.get("datePlannedImplementation");
-
-            if (data != null) {
-                data = data.substring(0, 10);
-                if (data.equals(currentDate.toString())) {
-                    listTasksOnTheDay.add(obj);
-                }
-            }
-        }
-
-        return ResponseEntity.ok(listTasksOnTheDay);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/onOtherDays")
-    public ResponseEntity<?> getTasksOnOtherDays(Principal principal) throws org.json.simple.parser.ParseException {
+    public ResponseEntity<?> getTasksOnOtherDays(Principal principal) {
         Long currentUserId = userService.getPrincipalUserId(principal);
-        String response = restTemplate.getForObject(taskService + '/' + currentUserId + "/allInProgressTasksWithDatePlannedImplementation", String.class);
+        String response = restTemplate.getForObject(taskService + '/' + currentUserId + "/tasksOnOtherDays", String.class);
 
-        LocalDate currentDate = LocalDate.now();
-        List<Object> listTasksOnOtherDays = new ArrayList<>();
-        JSONArray json = (JSONArray) new JSONParser().parse(response);
+        return ResponseEntity.ok(response);
+    }
 
-        for (Object item : json) {
-            JSONObject obj = (JSONObject) item;
-            String data = (String) obj.get("datePlannedImplementation");
+    @GetMapping("/incomplete")
+    public ResponseEntity<?> getTasksIncomplete(Principal principal) {
+        Long currentUserId = userService.getPrincipalUserId(principal);
+        String response = restTemplate.getForObject(taskService + '/' + currentUserId + "/tasksIncomplete", String.class);
 
-            if (data != null) {
-                data = data.substring(0, 10);
-                if (!data.equals(currentDate.toString())) {
-                    listTasksOnOtherDays.add(obj);
-                }
-            }
-        }
-
-        return ResponseEntity.ok(listTasksOnOtherDays);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/onSomeday")
@@ -123,5 +98,21 @@ public class TaskController {
         restTemplate.delete(taskService + '/' + currentUserId + "/deleteTask/" + taskId);
 
         return ResponseEntity.ok("Task successfully deleted!");
+    }
+
+    @PutMapping("/changeStatusOnCompleted/{taskId}")
+    public ResponseEntity<?> changeTaskStatusOnCompleted(Principal principal, @PathVariable Long taskId, @RequestBody Object request) {
+        Long currentUserId = userService.getPrincipalUserId(principal);
+        restTemplate.put(taskService + '/' + currentUserId + "/changeTaskStatusOnCompleted/" + taskId, request);
+
+        return ResponseEntity.ok("Task status has been successfully changed to completed!");
+    }
+
+    @PutMapping("/changeStatusOnInProgress/{taskId}")
+    public ResponseEntity<?> changeTaskStatusOnInProgress(Principal principal, @PathVariable Long taskId, @RequestBody Object request) {
+        Long currentUserId = userService.getPrincipalUserId(principal);
+        restTemplate.put(taskService + '/' + currentUserId + "/changeTaskStatusOnInProgress/" + taskId, request);
+
+        return ResponseEntity.ok("Task status has been successfully changed to completed!");
     }
 }
