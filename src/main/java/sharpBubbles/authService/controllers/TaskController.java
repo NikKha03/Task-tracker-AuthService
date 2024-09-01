@@ -1,9 +1,12 @@
 package sharpBubbles.authService.controllers;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import sharpBubbles.authService.DTO.TaskRequest;
+import sharpBubbles.authService.models.User;
 import sharpBubbles.authService.service.UserService;
 
 import java.security.Principal;
@@ -21,6 +24,8 @@ public class TaskController {
 
     @Value("${services.task}")
     private String taskService;
+
+    private String tgService = "";
 
     @GetMapping("/all")
     public ResponseEntity<?> getAllTasks(Principal principal) {
@@ -71,11 +76,29 @@ public class TaskController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createTask(Principal principal, @RequestBody Object request) {
-        Long currentUserId = userService.getPrincipalUserId(principal);
-        String response = restTemplate.postForObject(taskService + '/' + currentUserId + "/createTask", request, String.class);
+    public ResponseEntity<?> createTask(Principal principal, @RequestBody TaskRequest request) {
+        JSONObject responseTaskService = new JSONObject();
+        responseTaskService.put("header", request.getHeader());
+        responseTaskService.put("plannedImplDate", request.getPlannedImplDate());
+        responseTaskService.put("comment", request.getComment());
 
-        return ResponseEntity.ok(response);
+        Long currentUserId = userService.getPrincipalUserId(principal);
+        restTemplate.postForObject(taskService + '/' + currentUserId + "/createTask", responseTaskService, String.class);
+
+        // Отправка данных в tg сервис
+        User user = userService.findUserByEmail(principal.getName()).orElse(null);
+        if (user != null) {
+            String userTgName = user.getTg();
+            String notifications = request.getNotifications();
+
+            JSONObject responseTgService = new JSONObject();
+            responseTgService.put("tgName", userTgName);
+            responseTgService.put("notifications", notifications);
+
+            restTemplate.postForObject(tgService, responseTgService.toString(), String.class);
+        }
+
+        return ResponseEntity.ok("Task is successfully created!");
     }
 
     @PutMapping("/change/{taskId}")

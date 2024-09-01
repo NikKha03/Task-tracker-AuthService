@@ -14,7 +14,7 @@ public interface UserService {
 
     Long getPrincipalUserId(Principal principal);
 
-    void saveUser(User user);
+    User saveUser(User user);
 
     boolean existsUserByEmail(String email);
 

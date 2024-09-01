@@ -2,9 +2,10 @@ package sharpBubbles.authService.controllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import sharpBubbles.authService.DTO.UserRequest;
+import sharpBubbles.authService.models.User;
+import sharpBubbles.authService.models.UserBuilder;
 import sharpBubbles.authService.service.UserService;
 
 import java.security.Principal;
@@ -16,9 +17,22 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping()
-    public ResponseEntity<Long> getUserTasks(Principal principal) {
-        Long currentUserId = userService.getPrincipalUserId(principal);
-        return ResponseEntity.ok(currentUserId);
+    @GetMapping("/userInfo")
+    public ResponseEntity<User> getUserInfo(Principal principal) {
+        User user = userService.findUserByEmail(principal.getName()).orElse(null);
+
+        return ResponseEntity.ok(user);
+    }
+
+    @PutMapping("/changeInfo")
+    public ResponseEntity<User> changeUserInfo(Principal principal, @RequestBody UserRequest request) {
+        User user = userService.findUserByEmail(principal.getName()).orElse(null);
+        UserBuilder userBuilder = new UserBuilder(user)
+                .setEmail(request.getEmail())
+                .setFirstName(request.getFirstName())
+                .setLastName(request.getLastName())
+                .setTg(request.getTg());
+
+        return ResponseEntity.ok(userService.saveUser(userBuilder.build()));
     }
 }

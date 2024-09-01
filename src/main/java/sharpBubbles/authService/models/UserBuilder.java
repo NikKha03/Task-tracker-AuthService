@@ -2,13 +2,23 @@ package sharpBubbles.authService.models;
 
 public class UserBuilder {
 
-    private final User user = new User();
+    private final User user;
 
     public UserBuilder() {
+        this.user = new User();
+    }
+
+    public UserBuilder(User user) {
+        this.user = user;
     }
 
     public UserBuilder setEmail(String email) {
         user.setEmail(email);
+        return this;
+    }
+
+    public UserBuilder setTg(String tg) {
+        user.setTg(tg);
         return this;
     }
 
