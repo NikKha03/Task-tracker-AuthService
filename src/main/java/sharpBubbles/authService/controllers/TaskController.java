@@ -85,6 +85,7 @@ public class TaskController {
         Long currentUserId = userService.getPrincipalUserId(principal);
         restTemplate.postForObject(taskService + '/' + currentUserId + "/createTask", responseTaskService, String.class);
 
+        /*
         // Отправка данных в tg сервис
         User user = userService.findUserByEmail(principal.getName()).orElse(null);
         if (user != null) {
@@ -97,6 +98,7 @@ public class TaskController {
 
             restTemplate.postForObject(tgService, responseTgService.toString(), String.class);
         }
+        */
 
         return ResponseEntity.ok("Task is successfully created!");
     }

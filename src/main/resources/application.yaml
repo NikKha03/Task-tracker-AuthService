@@ -1,8 +1,8 @@
 server:
   port: 8090
 frontend:
-  login-page: http://localhost:5173/task-tracker/auth/login
-  user-page: http://localhost:5173/task-tracker/user
+  login-page: http://localhost:3000/task-tracker/auth/login
+  user-page: http://localhost:3000/task-tracker/user
 services:
   task: http://localhost:8080/taskServiceApi
 
@@ -33,8 +33,8 @@ spring:
             clientSecret: 01363a1fff0876f32ad55870ea3de7e7024bab38
           yandex:
             provider: yandex
-            clientId: 49ee2dc7949444f2a81a34fb81282747
-            clientSecret: 604bf0be165f4293bbe38d9e09e8fd46
+            clientId: засекретил
+            clientSecret: 2eb93f16b72742d3910ebdcc3bfaf05f
             redirectUri: http://localhost:8090/login/oauth2/code/yandex
             authorizationGrantType: authorization_code
             clientName: Yandex
