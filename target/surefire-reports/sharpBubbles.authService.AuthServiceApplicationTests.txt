@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: sharpBubbles.authService.AuthServiceApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.974 s -- in sharpBubbles.authService.AuthServiceApplicationTests

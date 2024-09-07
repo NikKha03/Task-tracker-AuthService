@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import sharpBubbles.authService.DTO.TaskRequest;
-import sharpBubbles.authService.models.User;
 import sharpBubbles.authService.service.UserService;
 
 import java.security.Principal;
@@ -36,41 +35,41 @@ public class TaskController {
     }
 
     @GetMapping("/allCompleted")
-    public ResponseEntity<?> getAllCompleted(Principal principal) {
+    public ResponseEntity<?> getAllCompleted(Principal principal, @RequestParam String category) {
         Long currentUserId = userService.getPrincipalUserId(principal);
-        String response = restTemplate.getForObject(taskService + '/' + currentUserId + "/allCompletedTasks", String.class);
+        String response = restTemplate.getForObject(taskService + '/' + currentUserId + "/allCompletedTasks" + "?category=" + category, String.class);
 
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/onTheDay")
-    public ResponseEntity<?> getTasksOnTheDay(Principal principal) {
+    public ResponseEntity<?> getTasksOnTheDay(Principal principal, @RequestParam String category) {
         Long currentUserId = userService.getPrincipalUserId(principal);
-        String response = restTemplate.getForObject(taskService + '/' + currentUserId + "/tasksOnTheDay", String.class);
+        String response = restTemplate.getForObject(taskService + '/' + currentUserId + "/tasksOnTheDay" + "?category=" + category, String.class);
 
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/onOtherDays")
-    public ResponseEntity<?> getTasksOnOtherDays(Principal principal) {
+    public ResponseEntity<?> getTasksOnOtherDays(Principal principal, @RequestParam String category) {
         Long currentUserId = userService.getPrincipalUserId(principal);
-        String response = restTemplate.getForObject(taskService + '/' + currentUserId + "/tasksOnOtherDays", String.class);
+        String response = restTemplate.getForObject(taskService + '/' + currentUserId + "/tasksOnOtherDays" + "?category=" + category, String.class);
 
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/incomplete")
-    public ResponseEntity<?> getTasksIncomplete(Principal principal) {
+    public ResponseEntity<?> getTasksIncomplete(Principal principal, @RequestParam String category) {
         Long currentUserId = userService.getPrincipalUserId(principal);
-        String response = restTemplate.getForObject(taskService + '/' + currentUserId + "/tasksIncomplete", String.class);
+        String response = restTemplate.getForObject(taskService + '/' + currentUserId + "/tasksIncomplete" + "?category=" + category, String.class);
 
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/onSomeday")
-    public ResponseEntity<?> getAllInProgressWithoutDatePlannedImplementation(Principal principal) {
+    public ResponseEntity<?> getAllInProgressWithoutDatePlannedImplementation(Principal principal, @RequestParam String category) {
         Long currentUserId = userService.getPrincipalUserId(principal);
-        String response = restTemplate.getForObject(taskService + '/' + currentUserId + "/allInProgressTasksWithoutDatePlannedImplementation", String.class);
+        String response = restTemplate.getForObject(taskService + '/' + currentUserId + "/allInProgressTasksWithoutDatePlannedImplementation" + "?category=" + category, String.class);
 
         return ResponseEntity.ok(response);
     }

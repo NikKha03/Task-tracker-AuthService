@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Data
 @Table(name = "users")
@@ -25,6 +27,9 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private UserRole roles;
+
+    @ManyToMany(mappedBy = "users")
+    private List<Category> categories;
 
     @NotNull
     @Enumerated(EnumType.STRING)

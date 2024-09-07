@@ -11,7 +11,7 @@ spring:
     name: authService
   session:
     redis:
-      host: localhost
+      host: redis
       port: 6379
   datasource:
     url: jdbc:postgresql://localhost:5434/clients
@@ -33,7 +33,7 @@ spring:
             clientSecret: 01363a1fff0876f32ad55870ea3de7e7024bab38
           yandex:
             provider: yandex
-            clientId: засекретил
+            clientId: 49ee2dc7949444f2a81a34fb81282747
             clientSecret: 2eb93f16b72742d3910ebdcc3bfaf05f
             redirectUri: http://localhost:8090/login/oauth2/code/yandex
             authorizationGrantType: authorization_code

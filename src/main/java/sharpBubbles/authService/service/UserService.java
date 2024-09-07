@@ -10,12 +10,8 @@ public interface UserService {
 
     Optional<User> findUserByEmail(String email);
 
-    List<User> findAllUsers();
-
     Long getPrincipalUserId(Principal principal);
 
     User saveUser(User user);
-
-    boolean existsUserByEmail(String email);
 
 }

@@ -1,12 +1,12 @@
-package sharpBubbles.authService.service;
+package sharpBubbles.authService.service.Impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import sharpBubbles.authService.models.User;
 import sharpBubbles.authService.repository.UserRepository;
+import sharpBubbles.authService.service.UserService;
 
 import java.security.Principal;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,19 +21,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllUsers() {
-        return userRepository.findAll();
-    }
-
-    @Override
     public Long getPrincipalUserId(Principal principal) {
         User currentUser = userRepository.findByEmail(principal.getName()).orElse(null);
         return currentUser != null ? currentUser.getUserId() : null;
-    }
-
-    @Override
-    public boolean existsUserByEmail(String email) {
-        return userRepository.existsUserByEmail(email);
     }
 
     @Override
