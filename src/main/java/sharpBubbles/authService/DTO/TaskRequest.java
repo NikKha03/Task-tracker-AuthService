@@ -11,6 +11,8 @@ public class TaskRequest {
 
     private String comment;
 
+    private String category;
+
     private String plannedImplDate;
 
     private String notifications;

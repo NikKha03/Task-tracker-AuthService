@@ -24,6 +24,8 @@ public class CategoryController {
     @PostMapping("/create")
     public ResponseEntity<?> createTask(Principal principal, @RequestBody CategoryRequest request) {
         User user = userService.findUserByEmail(principal.getName()).orElse(null);
+//        User user = userService.findUserByEmail("nik.kh.03@yandex.ru").orElse(null);
+
         categoryService.createCategory(user, request.getName());
 
         return ResponseEntity.ok(user.getCategories().stream().map(Category::getName));

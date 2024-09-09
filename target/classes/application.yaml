@@ -34,7 +34,7 @@ spring:
           yandex:
             provider: yandex
             clientId: 49ee2dc7949444f2a81a34fb81282747
-            clientSecret: 2eb93f16b72742d3910ebdcc3bfaf05f
+            clientSecret: db02681424bf4bae92b3adf440c47072
             redirectUri: http://localhost:8090/login/oauth2/code/yandex
             authorizationGrantType: authorization_code
             clientName: Yandex

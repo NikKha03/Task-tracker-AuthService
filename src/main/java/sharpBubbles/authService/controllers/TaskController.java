@@ -80,6 +80,7 @@ public class TaskController {
         responseTaskService.put("header", request.getHeader());
         responseTaskService.put("plannedImplDate", request.getPlannedImplDate());
         responseTaskService.put("comment", request.getComment());
+        responseTaskService.put("category", request.getCategory());
 
         Long currentUserId = userService.getPrincipalUserId(principal);
         restTemplate.postForObject(taskService + '/' + currentUserId + "/createTask", responseTaskService, String.class);
