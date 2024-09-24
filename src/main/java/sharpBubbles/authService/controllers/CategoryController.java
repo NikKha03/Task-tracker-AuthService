@@ -22,7 +22,7 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @PostMapping("/create")
-    public ResponseEntity<?> createTask(Principal principal, @RequestBody CategoryRequest request) {
+    public ResponseEntity<?> createCategory(Principal principal, @RequestBody CategoryRequest request) {
         User user = userService.findUserByEmail(principal.getName()).orElse(null);
 //        User user = userService.findUserByEmail("nik.kh.03@yandex.ru").orElse(null);
 
@@ -33,6 +33,8 @@ public class CategoryController {
 
     @GetMapping("/getAll")
     public ResponseEntity<?> getAll(Principal principal) {
+        System.out.println(principal);
+//        return ResponseEntity.ok("");
         User user = userService.findUserByEmail(principal.getName()).orElse(null);
         return ResponseEntity.ok(user.getCategories().stream().map(Category::getName));
     }

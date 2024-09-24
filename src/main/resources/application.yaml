@@ -28,19 +28,27 @@ spring:
     oauth2:
       client:
         registration:
-          github:
-            clientId: Ov23liMScbr0doTid1dm
-            clientSecret: 01363a1fff0876f32ad55870ea3de7e7024bab38
-          yandex:
-            provider: yandex
-            clientId: 49ee2dc7949444f2a81a34fb81282747
-            clientSecret: секрет
-            redirectUri: http://localhost:8090/login/oauth2/code/yandex
-            authorizationGrantType: authorization_code
-            clientName: Yandex
+          keycloak:
+            client-id: UserService
+            client-secret: FHj6LNrkcaOitA3tqRuxeMVzxeO9HOcM
+            redirect-uri: http://localhost:8090/login/oauth2/code/keycloak
+            scope:
+              - openid
+              - microprofile-jwt
+            clientName: Keycloak
+#          yandex:
+#            provider: yandex
+#            clientId: 49ee2dc7949444f2a81a34fb81282747
+#            clientSecret: db02681424bf4bae92b3adf440c47072
+#            redirectUri: http://localhost:8090/login/oauth2/code/yandex
+#            authorizationGrantType: authorization_code
+#            clientName: Yandex
         provider:
-          yandex:
-            authorizationUri: https://oauth.yandex.ru/authorize
-            tokenUri: https://oauth.yandex.ru/token
-            userNameAttribute: default_email
-            userInfoUri: https://login.yandex.ru/info
+#          yandex:
+#            authorizationUri: https://oauth.yandex.ru/authorize
+#            tokenUri: https://oauth.yandex.ru/token
+#            userNameAttribute: default_email
+#            userInfoUri: https://login.yandex.ru/info
+          keycloak:
+            issuer-uri: "http://localhost:7010/realms/Task-tracker"
+            user-name-attribute: preferred_username

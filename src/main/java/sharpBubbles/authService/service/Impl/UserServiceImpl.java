@@ -21,6 +21,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Boolean existsUserByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    @Override
     public Long getPrincipalUserId(Principal principal) {
         User currentUser = userRepository.findByEmail(principal.getName()).orElse(null);
         return currentUser != null ? currentUser.getUserId() : null;

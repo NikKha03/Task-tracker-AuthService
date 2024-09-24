@@ -31,7 +31,6 @@ public class User {
     @ManyToMany(mappedBy = "users")
     private List<Category> categories;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
     private RegistrationSource registrationSource;
 
